@@ -4,3 +4,8 @@
 *.elf
 *.hex
 *.bin
+/Debug
+*.list
+*.su
+/GIT_REV
+*.map

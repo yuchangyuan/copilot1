@@ -18,7 +18,6 @@ int main(int argc, char **argv)
         while (!btn_status());
         while (btn_status());
     }
-    goto L;
 
-    return 0;
+    goto L;
 }

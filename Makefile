@@ -7,7 +7,7 @@ OBJCOPY := $(HOST)-objcopy
 OBJDUMP := $(HOST)-objdump
 
 
-CFLAGS := -g -Wall -fstack-usage
+CFLAGS := -g -Wall -fstack-usage -Os
 CFLAGS := -mcpu=cortex-m4 -mlittle-endian -mthumb $(CFLAGS)
 CFLAGS := -Iinclude -DSTM32F303xC $(CFLAGS)
 

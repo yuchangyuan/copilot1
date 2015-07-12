@@ -16,7 +16,9 @@ TARGET = proj1
 src_c = \
 	src/system_stm32f3xx.c \
 	src/main.c \
-	src/led.c
+	src/led.c \
+	src/btn.c \
+	src/sys.c
 
 obj_c = $(foreach f, $(src_c), Debug/$(basename $(f)).o)
 

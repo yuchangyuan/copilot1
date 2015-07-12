@@ -9,6 +9,7 @@ OBJDUMP := $(HOST)-objdump
 
 CFLAGS := -g -Wall -fstack-usage -Os
 CFLAGS := -mcpu=cortex-m4 -mlittle-endian -mthumb $(CFLAGS)
+CFLAGS := -mfpu=fpv4-sp-d16 -mfloat-abi=hard $(CFLAGS)
 CFLAGS := -Iinclude -DSTM32F303xC $(CFLAGS)
 
 TARGET = proj1
@@ -18,7 +19,8 @@ src_c = \
 	src/main.c \
 	src/led.c \
 	src/btn.c \
-	src/sys.c
+	src/sys.c \
+	src/led_pwm.c
 
 obj_c = $(foreach f, $(src_c), Debug/$(basename $(f)).o)
 

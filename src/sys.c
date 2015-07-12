@@ -1,13 +1,38 @@
 #include "sys.h"
 #include "led.h"
 #include "btn.h"
+#include "led_pwm.h"
 #include "stm32f3xx.h"
+
+static vu32 tick_cnt = 0;
+
+void SysTick_Handler()
+{
+    tick_cnt++;
+    //led_set_all(TIM2->CNT);
+}
+
+void sys_wait_next_tick()
+{
+    u32 tick = tick_cnt;
+    while (tick_cnt != tick);
+}
+
+// wait for next N ms
+void sys_wait(int n)
+{
+    u32 tick = tick_cnt;
+
+    while ((s32)(tick_cnt - tick) < n);
+}
 
 static void setup_clock()
 {
-    // set pll, 8M * 12 / 2 = 48M
+    // set pll, 8M * 10 / 2 = 40M
     RCC->CFGR &= ~RCC_CFGR_PLLMUL;
-    RCC->CFGR |=  RCC_CFGR_PLLMUL12; // set any value > 12 will cause problem
+    // set any value > 12 will cause problem
+    // and set 12 is not stable
+    RCC->CFGR |=  RCC_CFGR_PLLMUL10;
 
     // set HSI/2 as pll source
     RCC->CFGR &= ~RCC_CFGR_PLLSRC;
@@ -27,6 +52,10 @@ static void setup_clock()
 void sys_init()
 {
     setup_clock();
+
+    SysTick_Config(SystemCoreClock / 1000);
+
     btn_init();
     led_init();
+    led_pwm_init();
 }

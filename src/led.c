@@ -16,8 +16,6 @@
 
  */
 
-#define LED_NUM 8
-
 static u16 led_tbl[LED_NUM] = {
     9, 8, 15, 14, 13, 12, 11, 10
 };
@@ -31,6 +29,7 @@ void led_init()
     // set led bit of GPIOE to output mode
     for (i = 0; i < LED_NUM; ++i) {
         GPIOE->MODER |= (0x01 << (2 * led_tbl[i]));
+        GPIOE->OSPEEDR |= (0x3 << (2 * led_tbl[i])); // high speed
     }
     // turn led off
     for (i = 0; i < LED_NUM; ++i) {
@@ -42,14 +41,14 @@ void led_set(u8 id, bool val)
 {
     if (id >= LED_NUM) return;
 
-    if (val) GPIOE->ODR |= 1 << led_tbl[id];
+    if (val) GPIOE->ODR |= (1 << led_tbl[id]);
     else GPIOE->ODR &= ~(1 << led_tbl[id]);
 }
 
 bool led_get(u8 id)
 {
     if (id >= LED_NUM) return 0;
-    return ((GPIOE->ODR >> (led_tbl[id])) != 0);
+    return ((GPIOE->ODR & (1 << led_tbl[id])) != 0);
 }
 
 void led_set_all(u8 val)

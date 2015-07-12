@@ -7,7 +7,7 @@ OBJCOPY := $(HOST)-objcopy
 OBJDUMP := $(HOST)-objdump
 
 
-CFLAGS := -g -Wall -fstack-usage -O2
+CFLAGS := -g -Wall -fstack-usage
 CFLAGS := -mcpu=cortex-m4 -mlittle-endian -mthumb $(CFLAGS)
 CFLAGS := -Iinclude -DSTM32F303xC $(CFLAGS)
 
@@ -15,7 +15,8 @@ TARGET = proj1
 
 src_c = \
 	src/system_stm32f3xx.c \
-	src/main.c
+	src/main.c \
+	src/led.c
 
 obj_c = $(foreach f, $(src_c), Debug/$(basename $(f)).o)
 

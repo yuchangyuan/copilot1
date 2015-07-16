@@ -26,6 +26,13 @@ void sys_wait(int n)
     while ((s32)(tick_cnt - tick) < n);
 }
 
+void sys_step()
+{
+    static u32 cnt = 0;
+    cnt++;
+    while ((s32)(cnt - tick_cnt) >= 0);
+}
+
 static void setup_clock()
 {
     // set pll, 8M * 10 / 2 = 40M

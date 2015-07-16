@@ -70,7 +70,7 @@ static void init_tim(TIM_TypeDef *tim, u16 cnt0)
     // 2. trigger event when
 
     // set cnt clk to 10KHz
-    tim->PSC = (SystemCoreClock / 1000 / 300);
+    tim->PSC = (SystemCoreClock / 1000 / 800);// 300, 800
 
     tim->CR1 &= ~TIM_CR1_CKD; // use clk_int
     tim->CR1 &= ~TIM_CR1_CMS; // use edge align mode
@@ -134,7 +134,7 @@ void led_pwm_set(u8 id, float val)
     _val[id] = val;
 
     // compute u16 level from val
-    level = (u16)(pow(val, 2.2) / 2.2 * LEVEL_MAX);
+    level = (u16)(powf(val, 2.2) / 2.2 * LEVEL_MAX);
 
     _level[id] = level;
 }

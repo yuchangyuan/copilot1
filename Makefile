@@ -20,7 +20,9 @@ src_c = \
 	src/led.c \
 	src/btn.c \
 	src/sys.c \
-	src/led_pwm.c
+	src/led_pwm.c \
+	src/i2c.c \
+	src/lsm303dlhc.c
 
 obj_c = $(foreach f, $(src_c), Debug/$(basename $(f)).o)
 

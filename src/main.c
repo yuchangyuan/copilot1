@@ -5,6 +5,8 @@
 #include "led.h"
 #include "led_pwm.h"
 #include "btn.h"
+#include "i2c.h"
+#include "lsm303dlhc.h"
 
 static void wait_btn()
 {
@@ -12,12 +14,26 @@ static void wait_btn()
     while (btn_status());
 }
 
+/*
+typedef struct _xyz_t
+{
+    s16 x;
+    s16 y;
+    s16 z;
+    u8 r;
+} xyz_t;
+
+    //i2c_init();
+    //lsm303dlhc_init();
+    //xyz.r = lsm303dlhc_mfs_read(&xyz.x, &xyz.y, &xyz.z);
+    //xyz.r = lsm303dlhc_la_read(&xyz.x, &xyz.y, &xyz.z);
+*/
+
 int main(int argc, char **argv)
 {
     int i = 0;
     bool dir = true;
     int j;
-
 
     sys_init();
 

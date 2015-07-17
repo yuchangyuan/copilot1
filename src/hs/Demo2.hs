@@ -16,23 +16,24 @@ ledNumS = fromIntegral ledNum
 -}
 ledVal :: Stream Bool -> Stream Float -> Stream Float
 ledVal bump decay =
-       let r1 = ([0.5] ++ r0) - decay -- r0 in last step
-           r0 = case' [bump, r1 < 0] [1.0, 0.0, r1]
-       in r0
+  let r1 = ([0.5] ++ r0) - decay -- r0 in last step
+      r0 = case' [bump, r1 < 0] [1.0, 0.0, r1]
+  in r0
 
 ledSeq :: Stream Int32
-ledSeq = r0 `div` scale where
-       r1 = ([0] ++ r0) + speed
-       r0 = (r1 + ledNumS * scale) `mod` (ledNumS * scale)
+ledSeq = r0 `div` scale
+  where
+    r1 = ([0] ++ r0) + speed
+    r0 = (r1 + ledNumS * scale) `mod` (ledNumS * scale)
 
 {-
  id: LED的编号，使得不同的LED能在不同的时候点亮
 -}
 ledBump :: Word8 -> Stream Bool
 ledBump id = (seq' /= seq) && (seq == (constI32 $ fromIntegral id))
-        where
-        seq = ledSeq
-        seq' = [0] ++ ledSeq
+  where
+    seq = ledSeq
+    seq' = [0] ++ ledSeq
 
 --- scaled by 1000
 speed0 = 4
